@@ -7,7 +7,7 @@ tests/output/*
 experiments/
 .github/
 instructions/
-notebooks/
+notebooks/*
 !notebooks/08_vae_multi_image_demo.ipynb
 !notebooks/morton_sorting_visualization.png
 myproject.toml
