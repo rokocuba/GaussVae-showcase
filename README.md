@@ -1,7 +1,7 @@
 # GaussVAE: Learned Compression of 2D Gaussian Splatting via Variational Autoencoders
 
-**Author:** Roko Kuburić  
-**Institution:** Research Project (November 2025)  
+**Author:** Roko Čubrić  
+**Institution:** Faculty of Electrical Engineering and Computing, University of Zagreb 
 **Status:** Early-stage development, active experimentation
 
 ---
@@ -12,7 +12,7 @@ Inspired by recent advances in deep neural networks and variational autoencoders
 
 Traditional image compression via variational autoencoders typically operates directly on pixel representations. While effective, these methods often employ block-based encoding schemes that partition images into fixed-size regions, processing each independently. This approach can introduce blocking artifacts and fails to leverage global structural coherence within natural images.
 
-In 2024, Intel Research introduced Image-GS, a technique that represents images as collections of 2D Gaussian splats—differentiable primitives that can be optimized to reconstruct images with high fidelity. Each Gaussian is parametrized by position, scale, rotation, and color, providing a continuous, object-centric representation rather than a pixel grid. This representation naturally captures image structure and has demonstrated promising reconstruction quality.
+In 2025, Intel Research introduced Image-GS, a technique that represents images as collections of 2D Gaussian splats—differentiable primitives that can be optimized to reconstruct images with high fidelity. Each Gaussian is parametrized by position, scale, rotation, and color, providing a continuous, object-centric representation rather than a pixel grid. This representation naturally captures image structure and has demonstrated promising reconstruction quality.
 
 Building on this foundation, I hypothesized that variational autoencoders could exploit their pattern recognition and learned embedding capabilities to further compress these Gaussian representations. Rather than compressing pixels, this approach compresses the learned Gaussian parameters themselves, potentially achieving superior compression ratios while maintaining reconstruction quality. The inherent trade-off is the loss of exact pixel-level details, which is acceptable for many perception tasks where structural and semantic content preservation is prioritized over lossless reconstruction.
 
@@ -42,7 +42,7 @@ Two architectures have been implemented and tested:
 - Activation: ReLU throughout
 - Loss: MSE reconstruction + β-weighted KL divergence with linear annealing
 
-**2. ResNet Conv1D VAE (4.8M parameters):**
+**2. ResNet Conv1D VAE (~16M parameters):**
 - Encoder: Five ResNet blocks with residual connections (32 → 256 filters)
 - Latent space: 512 dimensions
 - Decoder: Five ResNet blocks with residual connections (256 → 16 filters)
@@ -64,21 +64,13 @@ The current models exhibit high bias in reconstruction, particularly affecting r
 - Rotation parameters: Loss plateaus at ~1.0-1.2 (poor)
 - Color features: Loss plateaus at ~1.0 (poor)
 
-**Root Cause Hypothesis:**
+**Visual Results:**
 
-The primary issue stems from loss weighting imbalance. When summing MSE losses across parameter types with different channel counts (xy: 2 channels, scale: 2, rotation: 1, features: 3), the optimizer disproportionately focuses on multi-channel parameters. Single-channel parameters like rotation contribute minimally to the total gradient magnitude, resulting in underfitting.
+For detailed reconstruction visualizations and quantitative comparisons, see `notebooks/08_vae_multi_image_demo.ipynb` in the [complete repository](https://github.com/rokocuba/gaussvae).
 
 **Ongoing Experiments:**
 
-I am currently exploring per-channel loss normalization to address this bias:
-
-```
-L_total = L_xy/2 + L_scale/2 + L_rotation/1 + L_features/3
-```
-
-This weighting scheme ensures each parameter type contributes equally to the optimization objective, independent of channel count. Preliminary analysis suggests this approach should reduce rotation loss from 1.2 to approximately 0.6 and feature loss from 1.0 to 0.7.
-
-Additional experiments will investigate:
+I am currently investigating loss weighting strategies and architectural modifications to address these imbalances. Additional experiments will explore:
 - Alternative loss formulations (perceptual losses, adversarial training)
 - Increased model capacity and training duration
 - Curriculum learning strategies (progressive complexity increase)
@@ -130,23 +122,15 @@ Monitor training:
 tensorboard --logdir experiments/my_experiment/logs
 ```
 
-### Project Structure
-
-```
-├── configs/          # Training configurations (YAML)
-├── data/            # Dataset and preprocessing
-├── docker/          # Dockerfiles for reproducible environments
-├── experiments/     # Training logs and checkpoints
-├── notebooks/       # Jupyter notebooks for analysis
-├── scripts/         # Training and utility scripts
-├── src/gaussvae/    # Core library (models, training, data)
-├── tests/           # Unit tests (173 passing)
-└── third_party/     # Image-GS dependency
-```
-
 ## Acknowledgments
 
-This project builds upon the Image-GS technique developed by Intel Research. The implementation is original work, but the Gaussian splatting foundation is provided by their open-source release.
+This project builds upon the Image-GS technique developed by Intel Research and New York University's Immersive Computing Lab. The implementation is original work, but the Gaussian splatting foundation is provided by their open-source release.
+
+**Image-GS Resources:**
+- Repository: https://github.com/NYU-ICL/image-gs
+- Project Page: https://www.immersivecomputinglab.org/publication/image-gs-content-adaptive-image-representation-via-2d-gaussians/
+
+I would like to thank Dr. Yunxiang Zhang for his encouragement and valuable feedback during the early stages of this project.
 
 ## License
 
