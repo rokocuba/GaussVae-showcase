@@ -67,7 +67,7 @@ The current models exhibit high bias in reconstruction, particularly affecting r
 
 **Visual Results:**
 
-For detailed reconstruction visualizations and quantitative comparisons, see `notebooks/08_vae_multi_image_demo.ipynb` in the [complete repository](https://github.com/rokocuba/gaussvae).
+For detailed reconstruction visualizations and quantitative comparisons, see `notebooks/08_vae_multi_image_demo.ipynb` in the [notebooks](https://github.com/rokocuba/GaussVae-showcase/blob/main/notebooks/08_vae_multi_image_demo.ipynb).
 
 **Ongoing Experiments:**
 
