@@ -1,8 +1,9 @@
-# GaussVAE: Learned Compression of 2D Gaussian Splatting via Variational Autoencoders
+# GaussVAE: Compression of 2D Gaussian Splatting via Variational Autoencoders
 
 **Author:** Roko Čubrić  
-**Institution:** Faculty of Electrical Engineering and Computing, University of Zagreb 
+**Institution:** Faculty of Electrical Engineering and Computing, University of Zagreb \
 **Status:** Early-stage development, active experimentation
+
 
 ---
 
@@ -18,7 +19,7 @@ Building on this foundation, I hypothesized that variational autoencoders could 
 
 ## Architecture
 
-![VAE Architecture](notebooks/VAE_diagram.png)
+![VAE Architecture](notebooks/VAE-visualization.png)
 
 The system implements a two-stage compression pipeline:
 
