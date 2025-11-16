@@ -82,7 +82,7 @@ The project remains in early-stage development, and these challenges are expecte
 
 **Hardware:** Google Cloud Compute Engine VM with NVIDIA Tesla T4 GPU (16GB VRAM)  
 **Framework:** TensorFlow 2.12, CUDA 11.8  
-**Dataset:** 11,501 abstract art images (Delaunay triangulation), split 10,502 train / 500 validation / 499 test  
+**Dataset:** The Delaunay dataset (11,501 abstract art images generated via Delaunay triangulation), split 10,502 train / 500 validation / 499 test. This dataset was chosen for its abstract and general nature, providing diverse geometric patterns for initial experimentation. Future work will explore domain-specific datasets (e.g., faces, eyes) where the VAE could potentially learn more specialized structural patterns.  
 **Reproducibility:** All experiments conducted in Docker containers with fixed random seeds
 
 ## Usage
@@ -133,9 +133,14 @@ This project builds upon the Image-GS technique developed by Intel Research and 
 
 I would like to thank Dr. Yunxiang Zhang for his encouragement and valuable feedback during the early stages of this project.
 
+**Dataset:**
+This project uses the Delaunay dataset by Camille Gontier, released under the MIT License.
+
 ## License
 
 MIT License. See `LICENSE` for details.
+
+Third-party licenses (Image-GS, Delaunay dataset): See `THIRD_PARTY_LICENSES.md`
 
 ---
 
