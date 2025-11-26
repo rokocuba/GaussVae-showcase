@@ -85,44 +85,6 @@ The project remains in early-stage development, and these challenges are expecte
 **Dataset:** The Delaunay dataset (11,501 abstract art images generated via Delaunay triangulation), split 10,502 train / 500 validation / 499 test. This dataset was chosen for its abstract and general nature, providing diverse geometric patterns for initial experimentation. Future work will explore domain-specific datasets (e.g., faces, eyes) where the VAE could potentially learn more specialized structural patterns.  
 **Reproducibility:** All experiments conducted in Docker containers with fixed random seeds
 
-## Usage
-
-The codebase is structured for reproducible experimentation but should be considered early-stage research software. The training pipeline has not been extensively tested beyond the initial experiments documented here.
-
-### Environment Setup
-
-Build Docker images:
-```bash
-docker-compose build
-```
-
-Launch Jupyter environment:
-```bash
-docker-compose up -d jupyter
-# Access at http://localhost:8888
-```
-
-### Training
-
-Train baseline model:
-```bash
-docker-compose run --rm vae python scripts/train_conv1d_vae.py \
-  --config configs/conv1d_512d.yaml \
-  --output experiments/my_experiment
-```
-
-Train ResNet model:
-```bash
-docker-compose run --rm vae python scripts/train_resnet_conv1d_vae.py \
-  --config configs/resnet_conv1d_512d.yaml \
-  --output experiments/my_experiment
-```
-
-Monitor training:
-```bash
-tensorboard --logdir experiments/my_experiment/logs
-```
-
 ## Acknowledgments
 
 This project builds upon the Image-GS technique developed by Intel Research and New York University's Immersive Computing Lab. The implementation is original work, but the Gaussian splatting foundation is provided by their open-source release.
